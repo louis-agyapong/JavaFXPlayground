@@ -4,8 +4,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -22,26 +21,20 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         window = stage;
-        window.setTitle("JavaFX - Title");
+        window.setTitle("Bucky's Meat Subs");
 
-        // Form
-        TextField nameInput = new TextField();
-        Button button = new Button("Click me");
-        Label label = new Label();
-        button.setOnAction(e -> {
-            if (isInt(nameInput, nameInput.getText())) {
-                label.setText("User is " + nameInput.getText());
-                nameInput.clear();
-            } else {
-                label.setText("User is " + nameInput.getText());
-            }
+        // Checkboxes
+        CheckBox box1 = new CheckBox("Bacon");
+        CheckBox box2 = new CheckBox("Tuna");
+        box2.setSelected(true);
 
-        });
+        Button button = new Button("Order now");
+        button.setOnAction(e -> handleOptions(box1, box2));
 
         // Layout
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20, 20, 20, 20));
-        layout.getChildren().addAll(nameInput, label, button);
+        layout.getChildren().addAll(box1, box2, button);
 
 
         scene = new Scene(layout, 300, 250);
@@ -50,16 +43,21 @@ public class HelloApplication extends Application {
 
     }
 
+    /*
+    Handle checkbox options
+     */
+    private void handleOptions(CheckBox box1, CheckBox box2) {
+        String message = "User's order:\n";
+        if (box1.isSelected())
+            message += box1.getText() + "\n";
 
-    private boolean isInt(TextField input, String message) {
-        try {
-            int age = Integer.parseInt(input.getText());
-            System.out.println("User is " + age);
-            return true;
-        } catch (NumberFormatException e) {
-            System.out.println("Error: " + message + " is not a number.");
-            return false;
-        }
+        if (box2.isSelected())
+            message += box2.getText() + "\n";
+
+        System.out.println(message);
+
+
     }
+
 
 }
